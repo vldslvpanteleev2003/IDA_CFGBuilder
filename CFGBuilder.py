@@ -123,25 +123,6 @@ class CFGRecovery:
             if self.start_block in self.visited:
                 continue
             self.makeinstr()
-
-
-class CFG(ida_graph.GraphViewer):
-    def __init__(self, rec):
-        super().__init__("CFG")
-        self.blocks = rec.blocks
-    
-    def OnRefresh(self):
-        self.nodes = {}
-        self.Clear()
-        
-        for startblock in self.blocks:
-            node_id = self.AddNode(self.blocks[startblock]["instructions"])
-            self.nodes[startblock] = node_id
-        for startblock in self.blocks:
-            for edge in self.blocks[startblock]["edges"]:
-                self.AddEdge(self.nodes[startblock], self.nodes[edge])
-
-        return True
         
 class CFG(ida_graph.GraphViewer):
     def __init__(self, rec):
