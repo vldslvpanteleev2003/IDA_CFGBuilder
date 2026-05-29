@@ -46,20 +46,13 @@ class CFGRecovery:
         
     def addblock(self):
         
-        if self.insn.itype in RET_INSNS:   # chechking for ret instruictions
+        if (self.insn.itype in RET_INSNS) or (if self.size <= 0):  :   # chechking for ret instruictions or zero size instruction
             self.blocks[self.start_block] = {
                     "instructions": self.blockinstructions,
                     "edges": [],
                 }
             return
-            
-        if self.size <= 0:      # checking for zero or less instruction size
-            self.blocks[self.start_block] = {
-                    "instructions": self.blockinstructions,
-                    "edges": [],
-                }
-            return
-            
+
         edges = []
         truebranch = idc.get_operand_value(self.ea, 0)
         falsebranch = self.ea + self.size
